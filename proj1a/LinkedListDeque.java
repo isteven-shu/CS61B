@@ -1,8 +1,8 @@
 public class LinkedListDeque<T> {
     private class Node {
-        public T item;
-        public Node next;
-        public Node prev;
+        private T item;
+        private Node next;
+        private Node prev;
 
         public Node(T i, Node n, Node p) {
             item = i;
@@ -51,7 +51,7 @@ public class LinkedListDeque<T> {
 
     public void printDeque() {
         Node p = sentinel.next;
-        while(p != sentinel) {
+        while (p != sentinel) {
             System.out.print(p.item);
             System.out.print(' ');
             p = p.next;
@@ -59,19 +59,21 @@ public class LinkedListDeque<T> {
     }
 
     public T removeFirst() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
 
         T temp = sentinel.next.item;
-        sentinel.next = sentinel.next.next;
+        // 这里一开始顺序写反了！
+        // sentinel.next = sentinel.next.next;
         sentinel.next.next.prev = sentinel;
+        sentinel.next = sentinel.next.next;
         size--;
         return temp;
     }
 
     public T removeLast() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
 
@@ -83,26 +85,26 @@ public class LinkedListDeque<T> {
     }
 
     public T get(int index) {
-        if(size <= index) {
+        if (size <= index) {
             return null;
         }
 
         Node p = sentinel;
-        for(int i = 0; i <= index; ++i) {
+        for (int i = 0; i <= index; ++i) {
             p = p.next;
         }
         return p.item;
     }
 
     private T getRecursiveHelper(int index, Node p) {
-        if(index == 0) {
+        if (index == 0) {
             return p.item;
         }
         return getRecursiveHelper(index - 1, p.next);
     }
 
     public T getRecursive(int index) {
-        if(size <= index) {
+        if (size <= index) {
             return null;
         }
         return  getRecursiveHelper(index, sentinel.next);

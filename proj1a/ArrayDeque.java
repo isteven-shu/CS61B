@@ -31,42 +31,42 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if(size == items.length) {
+        if (size == items.length) {
             resize(items.length * 2);
         }
         size++;
         items[nextFirst] = item;
         nextFirst--;
-        if(nextFirst < 0) {
+        if (nextFirst < 0) {
             nextFirst += items.length;
         }
     }
 
     public void addLast(T item) {
-        if(size == items.length) {
+        if (size == items.length) {
             resize(items.length * 2);
         }
         size++;
         items[nextLast] = item;
         nextLast++;
-        if(nextLast >= items.length) {
+        if (nextLast >= items.length) {
             nextFirst -= items.length;
         }
     }
 
     public T removeFirst() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
 
         nextFirst++;
-        if(nextFirst >= items.length) {
+        if (nextFirst >= items.length) {
             nextFirst -= items.length;
         }
         T removedFirst = items[nextFirst];
         size--;
 
-        if(size * 4 <= items.length) {
+        if (size * 4 <= items.length) {
             resize(items.length / 2);
         }
 
@@ -74,18 +74,18 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
 
         nextLast--;
-        if(nextLast < 0) {
+        if (nextLast < 0) {
             nextFirst += items.length;
         }
         T removedLast = items[nextLast];
         size--;
 
-        if(size * 4 <= items.length) {
+        if (size * 4 <= items.length) {
             resize(items.length / 2);
         }
 
@@ -93,21 +93,20 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return;
         }
-        if(nextFirst < nextLast && nextLast - nextFirst != 1) {
-            for(int i = nextFirst + 1; i < nextLast; ++i) {
+        if (nextFirst < nextLast && nextLast - nextFirst != 1) {
+            for (int i = nextFirst + 1; i < nextLast; ++i) {
                 System.out.print(items[i]);
                 System.out.print(' ');
             }
-        }
-        else {
-            for(int i = nextFirst + 1; i < items.length; ++i) {
+        } else {
+            for (int i = nextFirst + 1; i < items.length; ++i) {
                 System.out.print(items[i]);
                 System.out.print(' ');
             }
-            for(int i = 0; i < nextLast; ++i) {
+            for (int i = 0; i < nextLast; ++i) {
                 System.out.print(items[i]);
                 System.out.print(' ');
             }
@@ -115,7 +114,7 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index) {
-        if(nextFirst + 1 + index < items.length) {
+        if (nextFirst + 1 + index < items.length) {
             return items[nextFirst + 1 + index];
         }
         return items[nextFirst + 1 + index -items.length];
