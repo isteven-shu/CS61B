@@ -33,7 +33,7 @@ public class ArrayDeque<T> {
         return n - 1 + items.length;
     }
 
-    private void resize(int n) {
+    private void grow(int n) {
         T[] newArray = (T[]) new Object[n];
         System.arraycopy(items, plusOne(nextFirst), newArray, 0, size - 1 - nextFirst);
         System.arraycopy(items, 0, newArray, size - 1 - nextFirst, minusOne(nextLast) + 1);
@@ -42,6 +42,29 @@ public class ArrayDeque<T> {
         nextLast = items.length;
 
         items = newArray;
+    }
+
+    private void shrink(int n) {
+        T[] newArray = (T[]) new Object[n];
+        if (nextFirst < nextLast) {
+            System.arraycopy(items, plusOne(nextFirst), newArray, 0, size);
+        } else {
+            System.arraycopy(items, plusOne(nextFirst), newArray, 0, items.length - 1 - nextFirst);
+            System.arraycopy(items, 0, newArray, items.length - 1 - nextFirst, nextLast);
+        }
+
+        nextFirst = n - 1;
+        nextLast = size;
+
+        items = newArray;
+    }
+
+    private void resize(int n) {
+        if (n > items.length) {
+            grow(n);
+        } else {
+            shrink(n);
+        }
     }
 
     public void addFirst(T item) {
@@ -80,7 +103,7 @@ public class ArrayDeque<T> {
         T removedFirst = items[nextFirst];
         size--;
 
-        if (size * 4 <= items.length) {
+        if (size * 4 <= items.length && items.length > 8) {
             resize(items.length / 2);
         }
 
@@ -99,7 +122,7 @@ public class ArrayDeque<T> {
         T removedLast = items[nextLast];
         size--;
 
-        if (size * 4 <= items.length) {
+        if (size * 4 <= items.length && items.length > 8) {
             resize(items.length / 2);
         }
 
@@ -145,10 +168,13 @@ public class ArrayDeque<T> {
         for(int i = 8; i < 16; ++i) {
             myDeque.addLast(i);
         }
-        for(int i = 17; i < 24; ++i) {
-            myDeque.addLast(i);
+        for(int i = 0; i < 16; ++i) {
+            int a = myDeque.removeFirst();
+            System.out.print(a);
+            System.out.print(' ');
         }
-        System.out.print(1);
+        myDeque.addLast(1);
+        int xx = 10;
         return;
     }
 }
