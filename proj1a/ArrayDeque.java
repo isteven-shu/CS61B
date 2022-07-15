@@ -19,10 +19,24 @@ public class ArrayDeque<T> {
         return size;
     }
 
+    private int plusOne(int n) {
+        if(n + 1 < items.length) {
+            return n + 1;
+        }
+        return n + 1 - items.length;
+    }
+
+    private int minusOne(int n) {
+        if(n - 1 >= 0) {
+            return n - 1;
+        }
+        return n - 1 + items.length;
+    }
+
     private void resize(int n) {
         T[] newArray = (T[]) new Object[n];
-        System.arraycopy(items, nextFirst + 1, newArray, 0, size - 1 - nextFirst);
-        System.arraycopy(items, 0, newArray, size - 1 - nextFirst, nextLast);
+        System.arraycopy(items, plusOne(nextFirst), newArray, 0, size - 1 - nextFirst);
+        System.arraycopy(items, 0, newArray, size - 1 - nextFirst, minusOne(nextLast) + 1);
 
         nextFirst = n - 1;
         nextLast = items.length;
@@ -118,5 +132,23 @@ public class ArrayDeque<T> {
             return items[nextFirst + 1 + index];
         }
         return items[nextFirst + 1 + index - items.length];
+    }
+
+    public static void main(String[] args) {
+        ArrayDeque<Integer> myDeque = new  ArrayDeque<Integer>();
+        for(int i = 0; i < 8; ++i) {
+            myDeque.addLast(i);
+        }
+
+        int x = myDeque.get(0);
+
+        for(int i = 8; i < 16; ++i) {
+            myDeque.addLast(i);
+        }
+        for(int i = 17; i < 24; ++i) {
+            myDeque.addLast(i);
+        }
+        System.out.print(1);
+        return;
     }
 }
