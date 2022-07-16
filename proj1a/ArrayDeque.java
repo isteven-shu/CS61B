@@ -1,9 +1,19 @@
+/** Deque based on array.
+ *  @author Shuyuan Wang
+ * */
 public class ArrayDeque<T> {
+    /** The array to hold items. */
     private T[] items;
+    /** The number of elements in array. */
     private int size;
+    /** Used to keep track of next first position. */
     private int nextFirst;
+    /** Used to keep track of next last position. */
     private int nextLast;
 
+    /** Used to create an empty array.
+     *  Initial size is 0.
+     * */
     public ArrayDeque() {
         size = 0;
         items = (T[]) new Object[8];
@@ -11,32 +21,49 @@ public class ArrayDeque<T> {
         nextLast = 4;
     }
 
+    /** Return if the deque is empty. */
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /** Return the number of current elements. */
     public int size() {
         return size;
     }
 
+    /** Inner private helper.
+     *  @param n the index to be plus 1
+     *  @return the logically plus-1 index
+     * */
     private int plusOne(int n) {
-        if(n + 1 < items.length) {
+        if (n + 1 < items.length) {
             return n + 1;
         }
         return n + 1 - items.length;
     }
 
+    /** Inner private helper.
+     *  @param n the index to be minus 1
+     *  @return the logically minus-1 index
+     *  */
     private int minusOne(int n) {
-        if(n - 1 >= 0) {
+        if (n - 1 >= 0) {
             return n - 1;
         }
         return n - 1 + items.length;
     }
 
+    /** Grow the capacity of list to n.
+     *  @param n the target size
+     * */
     private void grow(int n) {
         T[] newArray = (T[]) new Object[n];
-        System.arraycopy(items, plusOne(nextFirst), newArray, 0, size - 1 - nextFirst);
-        System.arraycopy(items, 0, newArray, size - 1 - nextFirst, minusOne(nextLast) + 1);
+        System.arraycopy(items, plusOne(nextFirst),
+                         newArray, 0,
+                  size - 1 - nextFirst);
+        System.arraycopy(items, 0,
+                         newArray, size - 1 - nextFirst,
+                  minusOne(nextLast) + 1);
 
         nextFirst = n - 1;
         nextLast = items.length;
@@ -44,13 +71,21 @@ public class ArrayDeque<T> {
         items = newArray;
     }
 
+    /** Shrink the capacity of list to n.
+     *  @param n the target size
+     * */
     private void shrink(int n) {
         T[] newArray = (T[]) new Object[n];
         if (nextFirst < nextLast) {
-            System.arraycopy(items, plusOne(nextFirst), newArray, 0, size);
+            System.arraycopy(items, plusOne(nextFirst),
+                    newArray, 0, size);
         } else {
-            System.arraycopy(items, plusOne(nextFirst), newArray, 0, items.length - 1 - nextFirst);
-            System.arraycopy(items, 0, newArray, items.length - 1 - nextFirst, nextLast);
+            System.arraycopy(items, plusOne(nextFirst),
+                             newArray, 0,
+                      items.length - 1 - nextFirst);
+            System.arraycopy(items, 0,
+                             newArray, items.length - 1 - nextFirst,
+                             nextLast);
         }
 
         nextFirst = n - 1;
@@ -59,6 +94,9 @@ public class ArrayDeque<T> {
         items = newArray;
     }
 
+    /** Resize the capacity of list to n.
+     * @param n the target size
+     * */
     private void resize(int n) {
         if (n > items.length) {
             grow(n);
@@ -67,6 +105,9 @@ public class ArrayDeque<T> {
         }
     }
 
+    /** Add an item to the front.
+     * @param item the item to be added
+     * */
     public void addFirst(T item) {
         if (size == items.length) {
             resize(items.length * 2);
@@ -79,6 +120,9 @@ public class ArrayDeque<T> {
         }
     }
 
+    /** Add an item to the end.
+     *  @param item the item to be added
+     * */
     public void addLast(T item) {
         if (size == items.length) {
             resize(items.length * 2);
@@ -91,6 +135,9 @@ public class ArrayDeque<T> {
         }
     }
 
+    /** Remove the first item.
+     *  @return the item gotten removed
+     * */
     public T removeFirst() {
         if (isEmpty()) {
             return null;
@@ -110,6 +157,9 @@ public class ArrayDeque<T> {
         return removedFirst;
     }
 
+    /** Remove the last item.
+     *  @return the item gotten removed
+     * */
     public T removeLast() {
         if (isEmpty()) {
             return null;
@@ -129,6 +179,7 @@ public class ArrayDeque<T> {
         return removedLast;
     }
 
+    /** Print the deque in order seperated by whitespace. */
     public void printDeque() {
         if (isEmpty()) {
             return;
@@ -150,31 +201,13 @@ public class ArrayDeque<T> {
         }
     }
 
+    /** Return the index-th element.
+     * @param index the index for the requested element
+     * */
     public T get(int index) {
         if (nextFirst + 1 + index < items.length) {
             return items[nextFirst + 1 + index];
         }
         return items[nextFirst + 1 + index - items.length];
-    }
-
-    public static void main(String[] args) {
-        ArrayDeque<Integer> myDeque = new  ArrayDeque<Integer>();
-        for(int i = 0; i < 8; ++i) {
-            myDeque.addLast(i);
-        }
-
-        int x = myDeque.get(0);
-
-        for(int i = 8; i < 16; ++i) {
-            myDeque.addLast(i);
-        }
-        for(int i = 0; i < 16; ++i) {
-            int a = myDeque.removeFirst();
-            System.out.print(a);
-            System.out.print(' ');
-        }
-        myDeque.addLast(1);
-        int xx = 10;
-        return;
     }
 }

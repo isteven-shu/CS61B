@@ -1,17 +1,21 @@
+/** Deque based on doubly linked list.
+ * @author Shuyuan Wang
+ * */
 public class LinkedListDeque<T> {
     private class Node {
         private T item;
         private Node next;
         private Node prev;
 
-        public Node(T i, Node n, Node p) {
+        /** Constructor for normal nodes */
+        Node(T i, Node n, Node p) {
             item = i;
             next = n;
             prev = p;
         }
 
-        /** Constructor for sentinel node */
-        public Node() {
+        /** Constructor for the sentinel node */
+        Node() {
             next = this;
             prev = this;
         }
@@ -64,8 +68,8 @@ public class LinkedListDeque<T> {
         }
 
         T temp = sentinel.next.item;
-        // 这里一开始顺序写反了！
-        // sentinel.next = sentinel.next.next;
+        /* 这里一开始顺序写反了！
+         sentinel.next = sentinel.next.next; */
         sentinel.next.next.prev = sentinel;
         sentinel.next = sentinel.next.next;
         size--;
