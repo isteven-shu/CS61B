@@ -7,7 +7,7 @@ public class TestArrayDequeGold {
         StudentArrayDeque<Integer> studentDeque = new StudentArrayDeque<>();
         ArrayDequeSolution<Integer> solutionDeque = new ArrayDequeSolution<>();
 
-        String log = "\n";
+        String log = "";
 
         boolean flag = true;
         while (flag) {
@@ -27,7 +27,7 @@ public class TestArrayDequeGold {
                     if (!solutionDeque.isEmpty()) {
                         Integer n1 = studentDeque.removeFirst();
                         Integer n2 = solutionDeque.removeFirst();
-                        log += "removeFirst()" + ": " + n1 + "\n";
+                        log += "removeFirst()\n";
                         assertEquals(log, n1, n2);
                     }
                     break;
@@ -35,7 +35,7 @@ public class TestArrayDequeGold {
                     if (!solutionDeque.isEmpty()) {
                         Integer n1 = studentDeque.removeLast();
                         Integer n2 = solutionDeque.removeLast();
-                        log += "removeLast()" + ": " + n1 + "\n";
+                        log += "removeLast()\n";
                         assertEquals(log, n1, n2);
                         break;
                     }
