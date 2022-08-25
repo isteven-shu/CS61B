@@ -46,6 +46,10 @@ public class Percolation {
     // open the site (row, col) if it is not open already
     public void open(int row, int col) {
         validate(row, col);
+        // 下面这行忘写了，不写的话重复open会计数错误
+        if (isOpen(row, col)) {
+            return;
+        }
 
         numOfOpen++;
         int idx = convertTo1D(row, col);
@@ -54,7 +58,8 @@ public class Percolation {
         if (row == 0) {
             gridForIsFull.union(idx, 0);
             gridForPercolate.union(idx, 0);
-        } else if (row == N - 1) {
+        } // 这里不可以有else！ N可以等于1
+        if (row == N - 1) {
             gridForPercolate.union(idx, N * N + 1);
         }
 
