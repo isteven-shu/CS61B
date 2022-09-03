@@ -114,18 +114,17 @@ public class MyTrieSet implements TrieSet61B{
         }
     }
 
+    /** To find the longest key that is a prefix of a given string */
     @Override
     public String longestPrefixOf(String s) {
         if (s == null)    return null;
-        String answer = "";
-        longestPrefixOf(root, s, answer, "");
-        return answer;
+        return longestPrefixOf(root, s, "", "");
     }
 
-    private void longestPrefixOf(Node root, String s, String curLongestKey, String curString) {
-        if (root == null)   return;
+    private String longestPrefixOf(Node root, String s, String curLongestKey, String curString) {
+        if (root == null || curString.length() == s.length())   return curLongestKey;
         if (root.isKey)     curLongestKey = curString;
         char c = s.charAt(curString.length());
-        longestPrefixOf(root.links.get(c), s, curLongestKey, curString + c);
+        return longestPrefixOf(root.links.get(c), s, curLongestKey, curString + c);
     }
 }
