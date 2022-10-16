@@ -46,12 +46,28 @@ public class SanityCheckTest {
 
     @Test
     public void sanityHorizontalSeamTest() {
-        Picture p = new Picture("images/6x5.png");
+        
+        Picture p = new Picture("images/1x8.png");
         SeamCarver sc = new SeamCarver(p);
 
-        int[] seam = sc.findHorizontalSeam();
-        int[] expected = {2, 2, 1, 2, 1, 2};
-        assertArrayEquals(expected, seam);
+        int[] seam1 = sc.findHorizontalSeam();
+        int[] expected1 = {4};
+        assertArrayEquals(expected1, seam1);
+
+        int[] seam2 = sc.findVerticalSeam();
+        int[] expected2 = {0 ,0, 0 ,0, 0 ,0, 0 ,0};
+        assertArrayEquals(expected2, seam2);
+
+//        Picture p = new Picture("images/6x5.png");
+//        SeamCarver sc = new SeamCarver(p);
+//
+//        int[] seam1 = sc.findHorizontalSeam();
+//        int[] expected1 = {2, 2, 1, 2, 1, 2};
+//        assertArrayEquals(expected1, seam1);
+//
+//        int[] seam2 = sc.findVerticalSeam();
+//        int[] expected2 = {3, 4, 3, 2, 2};
+//        assertArrayEquals(expected2, seam2);
     }
 
     public static void main(String[] args) {

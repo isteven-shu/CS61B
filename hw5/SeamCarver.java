@@ -3,23 +3,25 @@ import edu.princeton.cs.algs4.Picture;
 
 public class SeamCarver {
     private Picture myPicture;
-    boolean transpose;
+    private boolean transpose;
     public SeamCarver(Picture picture) {
         myPicture = new Picture(picture);   // Copy Construction.
         transpose = false;
     }
+
+    /** Using the copy constructor for Picture. */
     public Picture picture() {
-        return myPicture;
+        return new Picture(myPicture);
     }
 
     public int width() {
-        if (transpose)  return picture().height();
-        return picture().width();
+        if (transpose)  return myPicture.height();
+        return myPicture.width();
     }
 
     public int height() {
-        if (transpose)  return picture().width();
-        return picture().height();
+        if (transpose)  return myPicture.width();
+        return myPicture.height();
     }
 
     /** These four functions only apply to the original picture and must not be affected
@@ -50,10 +52,10 @@ public class SeamCarver {
     }
 
     public double energy(int x, int y) {
-        Color right = picture().get(right(x), y);
-        Color left = picture().get(left(x), y);
-        Color up = picture().get(x, up(y));
-        Color down = picture().get(x, down(y));
+        Color right = myPicture.get(right(x), y);
+        Color left = myPicture.get(left(x), y);
+        Color up = myPicture.get(x, up(y));
+        Color down = myPicture.get(x, down(y));
 
         double rx = right.getRed()   -  left.getRed();
         double gx = right.getGreen() -  left.getGreen();
@@ -66,6 +68,7 @@ public class SeamCarver {
     }
 
     public int[] findHorizontalSeam() {
+        if (height() == 1)   return new int[width()];
         transpose = true;
         int[] seam = findVerticalSeam();
         transpose = false;
@@ -73,6 +76,8 @@ public class SeamCarver {
     }
 
     public int[] findVerticalSeam() {
+        if (width() == 1)   return new int[height()];
+
         int[] seam = new int[height()];  // The answer.
         double[][] M = new double[height()][width()];   // The array for dp.
         double[][] e = new double[height()][width()];   // The array to record energy.
