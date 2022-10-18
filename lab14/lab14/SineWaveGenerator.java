@@ -14,6 +14,7 @@ public class SineWaveGenerator implements Generator {
 
 	public double next() {
 		state = (state + 1);
+		// 理解：采样率/信号频率 = 一个信号周期的采样次数
 		double period = StdAudio.SAMPLE_RATE / frequency;
 		return Math.sin(state * 2 * Math.PI / period);
 	}
